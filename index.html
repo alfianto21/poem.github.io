@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hadiah untuk Mayy</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #000;
+    }
+
+    /* Teks animasi */
+    #changing-text, #changing-text-2, #poem-line, #final-text {
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: none;
+      opacity: 0;
+      transition: opacity 1s ease-in-out; /* Tambahkan animasi fade */
+    }
+
+    /* Tombol interaktif */
+    #lets-see {
+      padding: 10px 20px;
+      background-color: #0920f2;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 20px;
+      cursor: pointer;
+      display: none;
+      transition: background-color 0.3s ease;
+      position: relative;
+      z-index: 10; /* Pastikan tombol berada di atas */
+    }
+
+    #lets-see:hover {
+      background-color: #24bdff;
+    }
+
+    audio {
+      display: none;
+    }
+
+    .night {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .stars {
+      /* Tambahkan gaya animasi bintang jatuh yang kamu butuhkan */
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Teks pembuka -->
+  <p id="changing-text">Hai Mayy, Selamat malam!</p>
+  <p id="changing-text-2">Sedikit Cerita Malam ini!</p>
+
+  <!-- Tombol interaktif -->
+  <button id="lets-see">Let's see</button>
+
+  <!-- Musik -->
+  <audio id="background-music" loop>
+    <source src="music.mp3" type="audio/mp3">
+  </audio>
+
+  <!-- Teks puisi satu per satu -->
+  <p id="poem-line"></p>
+
+  <!-- Teks final -->
+  <p id="final-text">
+    “Di perjalanan yang panjang ini, Senang rasanya bisa berproses bersama dengamu!”<br>
+    Love You!
+  </p>
+
+  <!-- Area animasi bintang jatuh -->
+  <div class="night">
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+    <div class="stars"></div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      let firstText = document.getElementById('changing-text');
+      let secondText = document.getElementById('changing-text-2');
+      let letsSeeButton = document.getElementById('lets-see');
+      let poemLine = document.getElementById('poem-line');
+      let finalText = document.getElementById('final-text');
+      let music = document.getElementById('background-music');
+
+      // Puisi per baris
+      const poemLines = [
+        "3",
+        "2",
+        "1",
+        " ",
+        "'Dialog Keheningan'",
+        "Madiun, 27 September 2024",
+        " ",
+        "Namamu terucap lembut dalam doaku,",
+        "Menjadi bisik lirih dalam dialog sunyi dengan Tuhan,",
+        "Setiap malam, rindu ini kubawa pada-Nya,",
+        "Karena hanya Dia yang tahu,",
+        "Betapa kau memenuhi hatiku tanpa kata.",
+        "Dalam hening, kusampaikan cinta yang tak pernah terucap,",
+        "Dalam tiap helaan napas, ada harap yang diam-diam kusisipkan,",
+        "Tentang kamu, tentang kita, yang selalu kuperbincangkan,",
+        "Dalam diam, hanya Tuhan yang mendengar rasa ini begitu dalam.",
+        "Kusimpan tanya di setiap sujudku yang khusyuk,",
+        "Adakah kau juga merasakan rindu yang menyusup?",
+        "Karena tanpa kau tahu, namamu mengisi setiap doa,",
+        "Menjadi alasan dari segala harap yang kupanjatkan pada semesta.",
+        "Aku tak tahu ke mana waktu akan membawa kita berdua,",
+        "Namun kuyakini, setiap doa ini takkan sia-sia,",
+        "Kuserahkan segalanya pada Dia yang menciptakan cinta,",
+        "Dan dalam diamku yang mengarah pada-Nya,",
+        "Kau adalah jawab yang kutunggu selamanya."
+      ];
+
+      const lineDisplayTime = [2000, 2000, 2000, 1500, 5500, 4000, 2000, 4500, 6000, 5000, 4000, 5000, 6500, 7000, 6500, 7000, 6000, 6000, 6000, 7000, 6200, 6000, 6300, 5000];
+
+      let currentLine = 0;
+
+      // Tampilkan teks pertama "Hai Mayy, apakabar?"
+      firstText.style.display = 'block';
+      firstText.style.opacity = 1;
+      setTimeout(function() {
+        firstText.style.opacity = 0;
+        setTimeout(function() {
+          firstText.style.display = 'none';
+          secondText.style.display = 'block';
+          secondText.style.opacity = 1;
+        }, 1000);
+      }, 3000); // Setelah 3 detik, tampilkan teks kedua
+
+      // Setelah 6 detik, tampilkan tombol "Let's see"
+      setTimeout(function() {
+        secondText.style.opacity = 0;
+        setTimeout(function() {
+          secondText.style.display = 'none';
+          letsSeeButton.style.display = 'inline-block';
+        }, 1000);
+      }, 6000);
+
+      // Event ketika tombol diklik
+      letsSeeButton.addEventListener('click', function() {
+        letsSeeButton.style.display = 'none'; // Tombol hilang setelah diklik
+        music.play(); // Putar musik setelah tombol diklik
+
+        // Tampilkan baris pertama puisi dengan animasi fade
+        displayPoemLine();
+      });
+
+      function displayPoemLine() {
+        if (currentLine < poemLines.length) {
+          poemLine.style.display = 'block';
+          poemLine.style.opacity = 1;
+          poemLine.innerHTML = poemLines[currentLine];
+          setTimeout(function() {
+            poemLine.style.opacity = 0;
+            setTimeout(function() {
+              currentLine++;
+              displayPoemLine(); // Panggil fungsi lagi untuk baris berikutnya
+            }, 1000);
+          }, lineDisplayTime[currentLine]); // Waktu per baris bisa disesuaikan
+        } else {
+          poemLine.style.opacity = 0;
+          setTimeout(function() {
+            poemLine.style.display = 'none';
+            finalText.style.display = 'block';
+            finalText.style.opacity = 1; // Tampilkan teks final dengan animasi fade
+          }, 1000);
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
